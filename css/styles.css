@@ -46,9 +46,12 @@ h2 {
   font-size: 3.5em;
   font-weight: bold;
   background: linear-gradient(#c5d81a, #e40808);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip:text;
-
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  /* color:rgb(187, 25, 25); */
+  /* color:linear-gradient(#c5d81a, #e40808); */
+  
+  /* text-shadow:2px 2px #eaee11;  */
 } 
 button {
   margin: 6px;
@@ -132,7 +135,6 @@ cursor:pointer;
 border-radius: 10px;
 background-color: #46d84d;
 color:white;
-
 }
 /* Overlay */
 
