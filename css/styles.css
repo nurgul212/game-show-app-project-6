@@ -42,6 +42,14 @@ h2 {
   margin: 0;
 }
 
+.good-luck { 
+  font-size: 3.5em;
+  font-weight: bold;
+  background: linear-gradient(#c5d81a, #e40808);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip:text;
+
+} 
 button {
   margin: 6px;
   border: 1px solid transparent;
@@ -119,6 +127,13 @@ button {
   font-size: var(--font-size-medium);
 }
 
+.btn__reset:hover{
+cursor:pointer;
+border-radius: 10px;
+background-color: #46d84d;
+color:white;
+
+}
 /* Overlay */
 
 #overlay {
