@@ -12,6 +12,7 @@ const phrases = [
     'good things take time',
     'life is short',
 ];
+const ul = document.querySelector('#phrase ul');
 
 /* --------------Step 3: Listen for the start game button to be pressed------------------*/
 startButton.addEventListener('click', () => {
@@ -28,11 +29,13 @@ function getRandomPhraseAsArray(array){
  }
 
  const selectedPhrase = getRandomPhraseAsArray(phrases);
+ 
 //  console.log(selectedPhrase);
 
  /* -------------Step 5: Add the selected letters of a string to the display--------------*/
 function addPhraseToDisplay(phrase) {
-    const ul = document.querySelector('ul');
+   
+    // const phraseDisplay=phrase;
     
     for(let i = 0; i < phrase.length; i++){
         const list = document.createElement('li');
@@ -42,8 +45,7 @@ function addPhraseToDisplay(phrase) {
         if (phrase[i] === ' ' ){
             list.className = 'space';
         } else {
-            list.className = 'letter';
-            
+            list.className = 'letter'    
         }  
     }
 }
@@ -55,7 +57,7 @@ function checkLetter(button){
     let matchLetter = null;
 
     for ( let i = 0; i < letterList.length; i++) {
-        if (button === letterList[i].textContent) {
+        if (button.textContent === letterList[i].textContent) {
             letterList[i].classList.add('show');
             letterList[i].style.transition = '0.5s ease-in-out';
             matchLetter = true;
@@ -69,8 +71,8 @@ let missed = 0;
 qwerty.addEventListener('click', (e) =>{
    if(e.target.tagName === 'BUTTON'){
        e.target.className = 'chosen';
-       e.target.disabled = true;
-       let matchLetter = checkLetter(e.target.textContent);
+       e.target.setAttribute('disabled', '');
+       let matchLetter = checkLetter(e.target);
        if(matchLetter === null){
            document.querySelectorAll('img')[missed].src='images/lostHeart.png';
            e.target.className = 'mismatch';
@@ -93,22 +95,54 @@ function checkWin() {
         document.querySelector('h2').textContent = 'Yay!... you nailed it!';
         document.querySelector('p').textContent = 'Well Done!';
         playAgain();
-    }
-    if (missed > 4 ) {
+    } else if (missed > 4 ) {
         overlay.style.display= 'flex';
         overlay.className='lose';
         document.querySelector('h2').textContent = 'Oops!... you lose!';
         document.querySelector('p').textContent = 'Don\'t Give Up, Try Again! :)';
-        playAgain();
+         playAgain();
     }   
 }
 
-//Restart the game
+/* --------------Step 9: Reset the game ----------------------------*/
 function playAgain(){
     startButton.textContent = 'Play Again';
     startButton.style.backgroundColor = '#bee35a';
+    missed = 0;
+    ul.textContent = ' ';
 
-    startButton.addEventListener('click', () => {
-     location.reload();
-    });    
+    const priorChosenLetters = document.querySelectorAll('.chosen');
+    const priorMismatchLetters = document.querySelectorAll('.mismatch');
+
+  for(let i = 0; i < priorChosenLetters.length; i++) {
+    priorChosenLetters[i].classList.remove('chosen');
+    priorChosenLetters[i].disabled = false;
+  }
+
+  for(let i = 0; i < priorMismatchLetters.length; i++) {
+    priorMismatchLetters[i].classList.remove('mismatch');
+    priorMismatchLetters[i].disabled = false;
+  }
+
+  // Get new phrase
+  const newPhrase = getRandomPhraseAsArray(phrases);
+  addPhraseToDisplay(newPhrase);
+
+  // Refill lives
+  const liveHearts = document.querySelectorAll('.tries img');
+  for(i = 0; i < liveHearts.length; i++) {
+    liveHearts[i].src = 'images/liveHeart.png';
+  }
+
 }
+
+//Restart the game. this fuction also works, but it just reloads the start page.
+// function playAgain(){
+//     startButton.textContent = 'Play Again';
+//     startButton.style.backgroundColor = '#bee35a';
+    
+
+//     startButton.addEventListener('click', () => {
+//      location.reload();
+//     });    
+// }
